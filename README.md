@@ -22,3 +22,16 @@ for adversary emulation, detection engineering and incident investigation.
 | WS01 | Windows 11 | Domain workstation |
 | ATTACK01 | Kali Linux | Adversary simulation |
 | SIEM01 | Ubuntu Linux | Wazuh SIEM |
+
+## Current Progress
+
+- [x] Windows Server installed
+- [x] DC01 configured
+- [x] Active Directory deployed
+- [x] Domain created: ad.purple.test
+- [x] Organizational Units created
+- [x] Test users created
+- [x] Security groups created
+- [x] Domain admin account created
+
+![AD structure](screenshots/03-ad-structure.png)
