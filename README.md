@@ -14,28 +14,11 @@ for adversary emulation, detection engineering and incident investigation.
 - Document detection gaps
 - Retest detections
 
-## Future Architecture
+## Lab Architecture
 
-```
-ATTACK01
-Kali Linux
-    |
-    v
-WS01
-Windows 11
-    |
-    v
-DC01
-Windows Server / Active Directory
-    |
-    v
-SIEM01
-Wazuh
-```
-
-| Host | Role | OS / Stack |
-|------|------|------------|
-| ATTACK01 | Attacker / adversary emulation | Kali Linux |
-| WS01 | Domain-joined workstation | Windows 11 |
-| DC01 | Domain Controller | Windows Server / Active Directory |
-| SIEM01 | Security monitoring & detection | Wazuh |
+| Host | Operating System | Purpose |
+|------|------------------|---------|
+| DC01 | Windows Server | Active Directory Domain Controller |
+| WS01 | Windows 11 | Domain workstation |
+| ATTACK01 | Kali Linux | Adversary simulation |
+| SIEM01 | Ubuntu Linux | Wazuh SIEM |
