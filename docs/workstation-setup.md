@@ -49,7 +49,7 @@ Administrative credentials from the domain were used to complete the join.
 
 ## Domain User
 
-The workstation will be used by the standard domain account:
+The workstation is used by the standard domain account:
 
 `PURPLE\alice`
 
