@@ -55,7 +55,7 @@ The workstation is used by the standard domain account:
 
 ## Active Directory Placement
 
-After the first successful domain logon, the `WS01` computer object will be moved to:
+The `WS01` computer object was moved to:
 
 ```text
 PurpleLab
@@ -64,9 +64,6 @@ PurpleLab
 
 ## Next Steps
 
-- Verify domain logon with alice
-- Move WS01 to the Workstations OU
-- Capture screenshot of the domain-joined workstation
 - Install Sysmon
 - Configure Windows event logging
 - Forward telemetry to the SIEM
