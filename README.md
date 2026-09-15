@@ -39,3 +39,4 @@ for adversary emulation, detection engineering and incident investigation.
 ## Documentation
 
 - [Active Directory Setup](docs/active-directory-setup.md)
+- [Windows Workstation Setup](docs/workstation-setup.md)
