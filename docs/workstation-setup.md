@@ -47,7 +47,7 @@ The workstation was joined to:
 
 Administrative credentials from the domain were used to complete the join.
 
-## Planned Domain User
+## Domain User
 
 The workstation will be used by the standard domain account:
 
