@@ -50,3 +50,30 @@ PurpleLab
 ├── Users
 └── Workstations
 ```
+
+## Test Users
+
+| User | Role |
+|------|------|
+| alice | Standard user |
+| bob | Standard user |
+| helpdesk | Helpdesk user |
+| itadmin | Privileged administrator |
+
+## Security Groups
+
+- `GG-Employees`
+- `GG-Helpdesk`
+
+## Privileged Account
+
+The `itadmin` account was added to the Domain Admins group.
+
+## Next Steps
+
+- Deploy Windows 11 workstation `WS01`
+- Join `WS01` to `ad.purple.test`
+- Configure Windows event logging
+- Install Sysmon
+- Deploy Wazuh
+- Perform first MITRE ATT&CK simulation
