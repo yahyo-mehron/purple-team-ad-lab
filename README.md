@@ -33,6 +33,10 @@ for adversary emulation, detection engineering and incident investigation.
 - [x] Test users created
 - [x] Security groups created
 - [x] Domain admin account created
+- [x] Windows 11 workstation deployed
+- [x] WS01 joined to ad.purple.test
+- [x] Domain logon verified with alice
+- [x] WS01 moved to Workstations OU
 
 ![AD structure](screenshots/03-ad-structure.png)
 
