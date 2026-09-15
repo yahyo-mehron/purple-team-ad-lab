@@ -35,3 +35,7 @@ for adversary emulation, detection engineering and incident investigation.
 - [x] Domain admin account created
 
 ![AD structure](screenshots/03-ad-structure.png)
+
+## Documentation
+
+- [Active Directory Setup](docs/active-directory-setup.md)
