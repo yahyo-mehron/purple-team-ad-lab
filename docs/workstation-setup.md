@@ -29,3 +29,44 @@ ping 192.168.226.10
 nslookup ad.purple.test
 ping dc01.ad.purple.test
 ```
+
+The workstation was able to resolve:
+
+- `ad.purple.test`
+- `dc01.ad.purple.test`
+
+to:
+
+`192.168.226.10`
+
+## Domain Join
+
+The workstation was joined to:
+
+`ad.purple.test`
+
+Administrative credentials from the domain were used to complete the join.
+
+## Planned Domain User
+
+The workstation will be used by the standard domain account:
+
+`PURPLE\alice`
+
+## Active Directory Placement
+
+After the first successful domain logon, the `WS01` computer object will be moved to:
+
+```text
+PurpleLab
+└── Workstations
+```
+
+## Next Steps
+
+- Verify domain logon with alice
+- Move WS01 to the Workstations OU
+- Capture screenshot of the domain-joined workstation
+- Install Sysmon
+- Configure Windows event logging
+- Forward telemetry to the SIEM
