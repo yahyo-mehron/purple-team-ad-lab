@@ -40,6 +40,10 @@ for adversary emulation, detection engineering and incident investigation.
 - [x] Sysmon installed on WS01
 - [x] Sysmon Operational log verified
 - [x] Process creation telemetry tested (Event ID 1)
+- [x] Wazuh SIEM deployed on SIEM01
+- [x] WS01 enrolled as Wazuh agent
+- [x] Sysmon Operational log forwarded to Wazuh
+- [x] Sysmon Event ID 1 telemetry visible in SIEM
 
 ![AD structure](screenshots/03-ad-structure.png)
 
