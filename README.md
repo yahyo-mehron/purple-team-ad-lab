@@ -37,6 +37,9 @@ for adversary emulation, detection engineering and incident investigation.
 - [x] WS01 joined to ad.purple.test
 - [x] Domain logon verified with alice
 - [x] WS01 moved to Workstations OU
+- [x] Sysmon installed on WS01
+- [x] Sysmon Operational log verified
+- [x] Process creation telemetry tested (Event ID 1)
 
 ![AD structure](screenshots/03-ad-structure.png)
 
