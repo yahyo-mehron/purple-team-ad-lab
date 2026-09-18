@@ -37,14 +37,17 @@ Run on: attacker / recon source host (`192.168.226.132`)
 
 ## Wireshark Evidence
 
-Packet capture on the lab network showed TCP traffic to WS01:
+Packet capture on the lab network showed TCP/RPC traffic from `192.168.226.132` to WS01 (`192.168.226.129:135`):
 
-- Destination IP: `192.168.226.129`
-- Destination port: `135`
-- Service: RPC Endpoint Mapper (`epmap`)
-- Protocol: TCP
+- TCP three-way handshake to destination port `135`
+- `DCERPC Bind` to Endpoint Mapper (`EPMv4`)
+- `EPM Lookup request` (core reconnaissance action)
+- Fragmented `DCERPC Response` packets returning registered RPC endpoints
+- TCP `FIN, ACK` closing the session
 
-This confirms that the connection attempt reached the target before higher-layer AD abuse or lateral movement.
+This confirms Endpoint Mapper enumeration at the network layer, before higher-level AD abuse or lateral movement.
+
+![RPC recon Wireshark](../../screenshots/07-rpc-recon-wireshark.png)
 
 ## Sysmon Event ID 3
 
