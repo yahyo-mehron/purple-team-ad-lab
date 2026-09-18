@@ -1,0 +1,17 @@
+<!--
+Lab-specific v1 detection.
+ATTACK01: 192.168.226.132
+Target service: RPC Endpoint Mapper TCP/135
+Not production-ready.
+-->
+<group name="windows,sysmon,rpc_recon,">
+
+  <rule id="100100" level="8">
+    <if_group>sysmon_event3</if_group>
+    <field name="win.eventdata.sourceIp" type="pcre2">^192\.168\.226\.132$</field>
+    <field name="win.eventdata.destinationPort" type="pcre2">^135$</field>
+    <description>RPC reconnaissance from ATTACK01 detected</description>
+    <group>sysmon_event3,reconnaissance,rpc_recon,</group>
+  </rule>
+
+</group>

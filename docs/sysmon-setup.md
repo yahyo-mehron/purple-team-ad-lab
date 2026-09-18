@@ -69,16 +69,39 @@ The event also contained:
 - SHA256 hash
 - Parent process information
 
+## Network Connection Telemetry
+
+Sysmon configuration was later updated to collect network connection telemetry.
+
+Confirmed:
+
+- Event ID: `3` — Network Connection
+- inbound RPC connection from ATTACK01
+- source IP: `192.168.226.132`
+- destination IP: `192.168.226.129`
+- destination port: `135`
+- initiated: `false`
+
+This telemetry was later used by Wazuh rule `100100` to detect RPC reconnaissance.
+
+## Current Verified Event IDs
+
+| Event ID | Type | Status |
+|----------|------|--------|
+| 1 | Process Create | Verified |
+| 3 | Network Connection | Verified |
+
 ## Result
 
 Sysmon telemetry collection on WS01 is operational.
 
-The workstation can now provide enhanced Windows telemetry for future detection engineering and attack simulation exercises.
+Verified process creation and network connection telemetry are available for detection engineering and attack simulation exercises.
 
 ## Next Steps
 
-- Test process creation from a standard domain user
-- Deploy a custom Sysmon configuration
-- Review additional Sysmon event types
-- Forward Sysmon logs to the SIEM
-- Create detection rules for simulated attacks
+- Expand Sysmon configuration
+- Review DNS Query telemetry
+- Review registry telemetry
+- Review process access telemetry
+- Reduce noisy events
+- Develop additional detection scenarios

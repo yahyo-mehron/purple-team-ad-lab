@@ -63,6 +63,27 @@ The following telemetry was verified in the dashboard:
 
 ![Wazuh Sysmon telemetry](../screenshots/07-wazuh-sysmon-events.png)
 
+## Detection Validation
+
+The first custom detection scenario was validated end-to-end:
+
+| Field | Value |
+|-------|-------|
+| Attacker | ATTACK01 (`192.168.226.132`) |
+| Target | WS01 (`192.168.226.129`) |
+| Telemetry | Sysmon Event ID 3 |
+| Destination | TCP/`135` |
+| Custom rule | `100100` |
+| Rule level | `8` |
+| MITRE ATT&CK | T1046 Network Service Discovery |
+| Result | Detection visible in Threat Hunting |
+
+Full write-up:
+
+[RPC Reconnaissance Detection Report](detections/rpc-reconnaissance.md)
+
+![RPC recon detection details](../screenshots/08-rpc-recon-detection-details.png)
+
 ## Troubleshooting
 
 During agent deployment, WS01 initially connected to an incorrect manager address:
@@ -81,11 +102,14 @@ The Wazuh agent service was then restarted successfully.
 
 ## Result
 
-Endpoint telemetry from WS01 is available in Wazuh and can be used for detection engineering, threat hunting and future adversary simulation exercises.
+Endpoint telemetry from WS01 is available in Wazuh and is already used for custom detection engineering.
+
+The completed RPC reconnaissance scenario confirms that Sysmon Event ID 3 telemetry can drive a custom Wazuh alert (`100100`).
 
 ## Next Steps
 
-- Review additional Sysmon event types in Wazuh
-- Deploy a custom Sysmon configuration
-- Create detection rules for simulated attacks
-- Perform the first MITRE ATT&CK simulation
+- Tune RPC reconnaissance rule
+- Remove hardcoded attacker IP in rule v2
+- Create additional detection scenarios
+- Add Sigma rule equivalents
+- Improve alert fidelity and false-positive handling

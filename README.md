@@ -18,10 +18,10 @@ for adversary emulation, detection engineering and incident investigation.
 
 | Host | Operating System | Purpose |
 |------|------------------|---------|
-| DC01 | Windows Server | Active Directory Domain Controller |
-| WS01 | Windows 11 | Domain workstation |
+| DC01 | Windows Server 2025 | Active Directory Domain Controller |
+| WS01 | Windows 11 Pro | Domain workstation |
 | ATTACK01 | Kali Linux | Adversary simulation |
-| SIEM01 | Ubuntu Linux | Wazuh SIEM |
+| SIEM01 | Ubuntu Server 24.04 | Wazuh SIEM |
 
 ## Current Progress
 
@@ -44,10 +44,41 @@ for adversary emulation, detection engineering and incident investigation.
 - [x] WS01 enrolled as Wazuh agent
 - [x] Sysmon Operational log forwarded to Wazuh
 - [x] Sysmon Event ID 1 telemetry visible in SIEM
+- [x] Kali ATTACK01 deployed
+- [x] Sysmon Event ID 3 network telemetry enabled
+- [x] RPC Endpoint Mapper reconnaissance simulated
+- [x] Wireshark RPC traffic validated
+- [x] Custom Wazuh detection rule 100100 created
+- [x] RPC reconnaissance detected in Wazuh
+- [x] First Attack → Telemetry → Detection → Alert scenario completed
+- [x] MITRE ATT&CK T1046 mapped
 
 ![AD structure](screenshots/03-ad-structure.png)
+
+## Current Detection Pipeline
+
+```text
+ATTACK01
+   ↓
+WS01
+   ↓
+Sysmon
+   ↓
+Wazuh Agent
+   ↓
+SIEM01
+   ↓
+Wazuh Detection / Alert
+```
+
+## Detection Scenarios
+
+- [RPC Endpoint Mapper Reconnaissance](docs/detections/rpc-reconnaissance.md) — ATTACK01 → WS01 → Sysmon Event ID 3 → Wazuh rule 100100 → MITRE T1046
 
 ## Documentation
 
 - [Active Directory Setup](docs/active-directory-setup.md)
 - [Windows Workstation Setup](docs/workstation-setup.md)
+- [Sysmon Setup](docs/sysmon-setup.md)
+- [Wazuh Setup](docs/wazuh-setup.md)
+- [RPC Reconnaissance Detection Report](docs/detections/rpc-reconnaissance.md)
