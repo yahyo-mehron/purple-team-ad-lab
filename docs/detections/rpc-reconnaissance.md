@@ -11,7 +11,7 @@ This exercise covers the first Attack → Telemetry → Detection → Alert loop
 | Host | Role | IP | Notes |
 |------|------|----|-------|
 | WS01 | Target / Wazuh agent | `192.168.226.129` | Domain workstation, Sysmon enabled |
-| SIEM01 | Wazuh all-in-one | `192.168.226.20` | Manager / Indexer / Dashboard |
+| SIEM01 | Wazuh all-in-one | `192.168.226.20` (local SIEM at time of this case) | Manager / Indexer / Dashboard |
 | ATTACK01 | Attacker / recon source | `192.168.226.132` | Kali Linux, RPC enumeration source |
 | DC01 | Domain Controller | `192.168.226.10` | Not the detection target in this scenario |
 

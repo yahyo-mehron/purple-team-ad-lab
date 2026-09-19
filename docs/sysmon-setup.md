@@ -34,7 +34,7 @@ The Sysmon service was verified with:
 Get-Service *sysmon*
 ```
 
-The service was running successfully.
+Expected: `Running`
 
 The Sysmon event log was verified with:
 
@@ -42,9 +42,36 @@ The Sysmon event log was verified with:
 Get-WinEvent -ListLog *Sysmon*
 ```
 
-Log:
+Log channel:
 
 `Microsoft-Windows-Sysmon/Operational`
+
+## Custom Configuration
+
+Path:
+
+`C:\Tools\Sysmon\sysmonconfig.xml`
+
+Relevant configuration used in the lab:
+
+```xml
+<Sysmon schemaversion="4.91">
+  <HashAlgorithms>sha256</HashAlgorithms>
+  <EventFiltering>
+    <ProcessCreate onmatch="exclude" />
+    <NetworkConnect onmatch="exclude" />
+    <DnsQuery onmatch="exclude" />
+  </EventFiltering>
+</Sysmon>
+```
+
+Applied with:
+
+```powershell
+.\Sysmon64.exe -c .\sysmonconfig.xml
+```
+
+An empty `onmatch="exclude"` block excludes nothing, so these event classes are collected.
 
 ## Process Creation Test
 
@@ -69,9 +96,11 @@ The event also contained:
 - SHA256 hash
 - Parent process information
 
+Later, suspicious PowerShell execution with `ExecutionPolicy Bypass` was also observed via Event ID 1 and used by Wazuh rules `92027` / `100101`.
+
 ## Network Connection Telemetry
 
-Sysmon configuration was later updated to collect network connection telemetry.
+Sysmon configuration was updated to collect network connection telemetry.
 
 Confirmed:
 
@@ -82,7 +111,7 @@ Confirmed:
 - destination port: `135`
 - initiated: `false`
 
-This telemetry was later used by Wazuh rule `100100` to detect RPC reconnaissance.
+This telemetry was later used by custom Wazuh rule `100100` to detect RPC reconnaissance network activity.
 
 ## Current Verified Event IDs
 
@@ -91,11 +120,11 @@ This telemetry was later used by Wazuh rule `100100` to detect RPC reconnaissanc
 | 1 | Process Create | Verified |
 | 3 | Network Connection | Verified |
 
+Event ID 22 (DNS Query) is configured for collection in the current config but is **not** claimed as verified here.
+
 ## Result
 
-Sysmon telemetry collection on WS01 is operational.
-
-Verified process creation and network connection telemetry are available for detection engineering and attack simulation exercises.
+Sysmon telemetry collection on WS01 is operational and supports both process-creation and network-connection detection engineering.
 
 ## Next Steps
 

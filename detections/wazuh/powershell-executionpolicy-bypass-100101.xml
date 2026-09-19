@@ -1,0 +1,22 @@
+<!--
+Custom Wazuh detection for PowerShell ExecutionPolicy Bypass.
+Depends on built-in rule 92027 (nested PowerShell).
+Lab-validated; not production-tuned.
+-->
+<group name="windows,sysmon,powershell,">
+
+  <rule id="100101" level="8">
+    <if_sid>92027</if_sid>
+
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)ExecutionPolicy\s+Bypass</field>
+
+    <description>Suspicious PowerShell execution with ExecutionPolicy Bypass</description>
+
+    <mitre>
+      <id>T1059.001</id>
+    </mitre>
+
+    <group>powershell,execution_policy_bypass,suspicious_execution,</group>
+  </rule>
+
+</group>

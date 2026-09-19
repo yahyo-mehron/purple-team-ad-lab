@@ -1,0 +1,23 @@
+title: PowerShell ExecutionPolicy Bypass
+id: 6f8d1f10-6df1-4e3f-91dd-7a9e8d6a1001
+status: experimental
+description: Detects PowerShell execution using ExecutionPolicy Bypass.
+author: Mehron Yahyo
+date: 2026-09-19
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection_image:
+    Image|endswith: '\powershell.exe'
+  selection_commandline:
+    CommandLine|contains|all:
+      - 'ExecutionPolicy'
+      - 'Bypass'
+  condition: selection_image and selection_commandline
+falsepositives:
+  - Legitimate administrative, deployment, or automation scripts using ExecutionPolicy Bypass
+level: medium
+tags:
+  - attack.execution
+  - attack.t1059.001

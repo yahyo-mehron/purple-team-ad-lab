@@ -1,7 +1,8 @@
 ﻿# Purple Team Active Directory Lab
 
-This project documents the creation of a Purple Team laboratory
-for adversary emulation, detection engineering and incident investigation.
+Hands-on Purple Team / Detection Engineering lab focused on adversary simulation, Windows telemetry, Sysmon, Wazuh SIEM, custom detections, built-in correlation validation, MITRE ATT&CK mapping, investigation, remediation and retesting.
+
+This is a personal lab/portfolio project, not a claim of commercial SOC experience.
 
 ## Goals
 
@@ -16,12 +17,56 @@ for adversary emulation, detection engineering and incident investigation.
 
 ## Lab Architecture
 
-| Host | Operating System | Purpose |
-|------|------------------|---------|
-| DC01 | Windows Server 2025 | Active Directory Domain Controller |
-| WS01 | Windows 11 Pro | Domain workstation |
-| ATTACK01 | Kali Linux | Adversary simulation |
-| SIEM01 | Ubuntu Server 24.04 | Wazuh SIEM |
+| Host | Operating System | Purpose | Network |
+|------|------------------|---------|---------|
+| DC01 | Windows Server 2025 | AD DS + DNS | `192.168.226.10` (VMware NAT) |
+| WS01 | Windows 11 Pro | Domain workstation / telemetry | `192.168.226.129` (VMware NAT + Tailscale) |
+| ATTACK01 | Kali Linux | Adversary simulation | `192.168.226.132` (VMware NAT) |
+| SIEM01 | Ubuntu Server 24.04 | Wazuh all-in-one (Beget VPS) | Tailscale `100.64.245.1` |
+
+Domain: `ad.purple.test` (NetBIOS: `PURPLE`)
+
+```text
+ATTACK01 ----\
+              \
+DC01 ---------- local VMware network (192.168.226.0/24)
+              /
+WS01 --------/
+  |
+  | Tailscale
+  v
+SIEM01 (Beget VPS / Ubuntu / Wazuh)
+```
+
+## Current Detection Pipeline
+
+```text
+ATTACK01 / local activity
+   ↓
+WS01 (Sysmon + Windows Security)
+   ↓
+Wazuh Agent
+   ↓
+Tailscale
+   ↓
+SIEM01 (Wazuh Manager / Indexer / Dashboard)
+   ↓
+Detection / Alert
+```
+
+## Completed Detection Scenarios
+
+| # | Scenario | Telemetry | Detection | Rule(s) | MITRE | Status |
+|---|----------|-----------|-----------|---------|-------|--------|
+| 1 | [RPC Reconnaissance](docs/detections/rpc-reconnaissance.md) | Sysmon EID 3 + Wireshark | Custom Wazuh | `100100` | T1046 | Completed |
+| 2 | [PowerShell ExecutionPolicy Bypass](docs/detections/powershell-executionpolicy-bypass.md) | Sysmon EID 1 | Built-in + custom | `92027` → `100101` | T1059.001 | Completed |
+| 3 | [Password Guessing](docs/detections/password-guessing.md) | Windows 4625 | Built-in correlation | `60122` → `60204` | T1110 | Completed |
+
+Notes:
+
+- RPC custom rule `100100` detects inbound TCP/135 from ATTACK01; Wireshark confirms EPM Lookup semantics
+- PowerShell includes a portable Sigma equivalent under `detections/sigma/`
+- Password guessing uses built-in Wazuh correlation (`60204`), not a custom rule
 
 ## Current Progress
 
@@ -52,28 +97,29 @@ for adversary emulation, detection engineering and incident investigation.
 - [x] RPC reconnaissance detected in Wazuh
 - [x] First Attack → Telemetry → Detection → Alert scenario completed
 - [x] MITRE ATT&CK T1046 mapped
+- [x] SIEM01 migrated to Beget VPS (Tailscale access)
+- [x] Suspicious PowerShell ExecutionPolicy Bypass detected (`92027` + `100101`)
+- [x] Sigma rule for PowerShell ExecutionPolicy Bypass added
+- [x] Password guessing validated via built-in correlation (`60204` / T1110)
 
 ![AD structure](screenshots/03-ad-structure.png)
 
-## Current Detection Pipeline
+## Technologies
 
-```text
-ATTACK01
-   ↓
-WS01
-   ↓
-Sysmon
-   ↓
-Wazuh Agent
-   ↓
-SIEM01
-   ↓
-Wazuh Detection / Alert
-```
-
-## Detection Scenarios
-
-- [RPC Endpoint Mapper Reconnaissance](docs/detections/rpc-reconnaissance.md) — ATTACK01 → WS01 → Sysmon Event ID 3 → Wazuh rule 100100 → MITRE T1046
+- Active Directory
+- Windows Server / Windows 11
+- Sysmon
+- Wazuh
+- Kali Linux
+- Impacket
+- Wireshark
+- SMB / NTLM
+- PowerShell
+- Sigma
+- MITRE ATT&CK
+- Tailscale
+- Linux / Ubuntu
+- Git / GitHub
 
 ## Documentation
 
@@ -82,3 +128,6 @@ Wazuh Detection / Alert
 - [Sysmon Setup](docs/sysmon-setup.md)
 - [Wazuh Setup](docs/wazuh-setup.md)
 - [RPC Reconnaissance Detection Report](docs/detections/rpc-reconnaissance.md)
+- [PowerShell ExecutionPolicy Bypass](docs/detections/powershell-executionpolicy-bypass.md)
+- [Password Guessing](docs/detections/password-guessing.md)
+- [Detection Rules Index](detections/README.md)
